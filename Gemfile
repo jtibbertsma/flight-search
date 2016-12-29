@@ -10,6 +10,7 @@ gem 'rails', '~> 5.0.1'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
+gem 'bootstrap-sass'
 
 # React app bootstrap and server rendering
 gem 'react_on_rails'
