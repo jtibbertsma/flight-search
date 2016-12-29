@@ -17,6 +17,7 @@ gem 'react_on_rails'
 # This is for faster server rendering of react apps. therubyracer is never updated
 # so it uses an ancient version of the v8 engine.
 gem 'mini_racer'
+gem 'execjs'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 

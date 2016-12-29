@@ -179,6 +179,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   byebug
+  execjs
   jbuilder (~> 2.5)
   listen (~> 3.0.5)
   mini_racer
