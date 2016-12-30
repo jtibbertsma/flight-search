@@ -1,11 +1,16 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
+import form from '../reducers/form'
 import geolocation from '../reducers/geolocation'
+import currentUser from '../reducers/currentUser'
+
 import logger from '../middleware/logger'
 
 
 const reducer = combineReducers({
-  geolocation
+  geolocation,
+  currentUser,
+  form
 })
 
 const enhancer = () => {

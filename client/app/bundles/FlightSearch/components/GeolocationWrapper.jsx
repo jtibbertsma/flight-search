@@ -6,9 +6,11 @@ import FlightSearch from './FlightSearch'
 import { fetchingPosition, setPosition, failedToSetPosition } from '../actions/geolocation'
 
 
-const mapStateToProps = ({ geolocation }) => {
+const mapStateToProps = ({ geolocation, currentUser }) => {
   return {
-    fetching: geolocation.fetching
+    fetching: geolocation.fetching,
+    signedIn: currentUser !== null,
+    coords: geolocation.position && geolocation.position.coords
   }
 }
 
@@ -26,7 +28,6 @@ class GeolocationWrapper extends React.Component {
 
     // Set current position using the browser's geolocation API
     if ("geolocation" in window.navigator) {
-      // Avoid a checksum mismatch
       fetchingPosition()
       window.navigator.geolocation.getCurrentPosition(
         position => setPosition(position),
@@ -38,7 +39,7 @@ class GeolocationWrapper extends React.Component {
   }
 
   render() {
-    const { fetching } = this.props
+    const { fetching, signedIn, coords } = this.props
 
     return (
       <div>
@@ -47,7 +48,11 @@ class GeolocationWrapper extends React.Component {
         <p>Fetching location...</p>
       ) : ''
         }
-        <FlightSearch fetchingLocation={fetching} />
+        <FlightSearch
+          fetchingLocation={fetching}
+          signedIn={signedIn}
+          coords={coords}
+        />
       </div>
     )
   }
