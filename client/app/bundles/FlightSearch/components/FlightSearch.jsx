@@ -77,7 +77,7 @@ class FlightSearch extends React.Component {
       if (response.authResponse) {
         setUser(response.authResponse)
         this.setState({showModal: false})
-        handleSubmitWhenSignedIn()
+        this.handleSubmitWhenSignedIn()
       } else {
         this.cancelSignIn()
       }
