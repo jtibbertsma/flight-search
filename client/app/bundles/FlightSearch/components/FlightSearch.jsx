@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/lib/Modal'
 
 import FlightSearchForm from './FlightSearchForm'
 import { setUser } from '../actions/currentUser'
+import search from '../http/search'
 
 
 const mapDispatchToProps = dispatch => {
@@ -13,6 +14,8 @@ const mapDispatchToProps = dispatch => {
   }, dispatch)
 }
 
+// This should be refactored so that facebook sign in logic and
+// modal are in their own file
 class FlightSearch extends React.Component {
   constructor(props) {
     super(props)
@@ -44,8 +47,19 @@ class FlightSearch extends React.Component {
   }
 
   handleSubmitWhenSignedIn() {
-    console.log("Submitted form")
-    this.resolvePromise()
+    search(this.formData,
+      // onSuccess
+      response => {
+        console.log(response)
+        this.resolvePromise()
+      },
+
+      // onError
+      err => {
+        console.error(err)
+        this.rejectPromise()
+      }
+    )
   }
 
   handlePromise(index) {
@@ -121,8 +135,17 @@ class FlightSearch extends React.Component {
     )
   }
 
+  componentWillReceiveProps(nextProps) {
+    // if the modal is open when the auth request finishes,
+    // close the modal and send the 
+    if (!this.props.signedIn && nextProps.signedIn && this.state.showModal) {
+      this.setState({showModal: false})
+      this.handleSubmitWhenSignedIn()
+    }
+  }
+
   render() {
-    const { signedIn, fetchingLocation, coords } = this.props
+    const { fetchingLocation, coords } = this.props
 
     return (
       <div>

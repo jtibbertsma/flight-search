@@ -18,7 +18,7 @@ class CheckLoginStatus extends React.Component {
     // HACK: FB won't be defined the first time this runs,
     // so check for it every 100ms
     const interval = window.setInterval(() => {
-      if (typeof window.FB !== "undefined") {
+      if (window.FBIsLoaded) {
         window.clearInterval(interval)
 
         window.FB.getLoginStatus(response => {
