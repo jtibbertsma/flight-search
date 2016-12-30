@@ -18,3 +18,27 @@
 body {
   font-family: 'Merriweather Sans', sans-serif;
 }
+
+.facebook-sign-in-button {
+  background: #4267b2;
+  color: white;
+  padding: 6px 6px 0px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 50%;
+}
+
+.facebook-icon {
+  width: 40px;
+}
+
+.facebook-banner {
+  position: relative;
+  bottom: 13px;
+  left: 12px;
+  font-size: 18px;
+}
+
+.more-margin {
+  margin-bottom: 30px;
+}
