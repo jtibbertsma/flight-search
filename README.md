@@ -2,7 +2,7 @@
 
 To run in development:
 
-- Probably need to change facebook app id in application_helper.rb
+- Need a secrets.yml with `facebook_app_id` and `google_api_key`
 - `foreman start -f Procfile.dev`
 
 ## Requirements

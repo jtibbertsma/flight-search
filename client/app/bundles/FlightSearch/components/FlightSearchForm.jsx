@@ -15,7 +15,7 @@ class FlightSearchForm extends React.Component {
           className="btn btn-info"
           disabled={fetchingLocation || submitting}
         >
-          Search
+          {submitting ? "Searching..." : "Search"}
         </button>
       </form>
     )

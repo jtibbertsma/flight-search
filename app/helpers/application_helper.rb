@@ -4,7 +4,7 @@ module ApplicationHelper
 <script>
 window.fbAsyncInit = function() {
   FB.init({
-    appId      : '237412250033318',
+    appId      : '#{Rails.application.secrets.facebook_app_id}',
     xfbml      : true,
     version    : 'v2.8'
   });

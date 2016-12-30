@@ -21,6 +21,7 @@ gem 'mini_racer'
 gem 'execjs'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+gem 'typhoeus'
 
 group :development, :test do
   gem 'byebug'

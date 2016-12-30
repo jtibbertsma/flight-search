@@ -21,3 +21,6 @@ node_modules
 
 # Generated js bundles
 /app/assets/webpack/*
+
+# hide api keys
+config/secrets.yml

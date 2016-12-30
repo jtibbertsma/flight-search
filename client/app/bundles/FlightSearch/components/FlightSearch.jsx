@@ -50,7 +50,7 @@ class FlightSearch extends React.Component {
     search(this.formData,
       // onSuccess
       response => {
-        console.log(response)
+        console.log(JSON.parse(response.data.flights))
         this.resolvePromise()
       },
 
