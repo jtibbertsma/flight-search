@@ -50,7 +50,7 @@ class FlightsController < ApplicationController
         coord = [nearest.latitude.to_f, nearest.longitude.to_f]
         @destinations = Airport.furthest(coord).first(8)
       else
-        @destinations = @data[:destinations].delete
+        @destinations = @data.delete(:destinations)
       end
     end
 

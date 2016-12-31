@@ -148,7 +148,7 @@ class FlightSearch extends React.Component {
   }
 
   render() {
-    const { fetchingLocation } = this.props
+    const { fetchingLocation, coords } = this.props
 
     return (
       <div>
@@ -156,6 +156,7 @@ class FlightSearch extends React.Component {
         <FlightSearchForm
           onSubmit={this.handleSubmit}
           fetchingLocation={fetchingLocation}
+          coords={coords}
         />
       </div>
     )
