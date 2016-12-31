@@ -17,19 +17,24 @@
 
 class Airport < ApplicationRecord
   class << self
-    # Given coordinates, find the nearest airport code
-    def nearest_airport(coord)
-      airport_distance_list = Airport.all.pluck(:latitude, :longitude, :code).map! do |lat, long, code|
-        lat = lat.to_f
-        long = long.to_f
+    def nearest(coord)
+      airport_distance_list(coord).sort_by { |dist,_|  dist }.map { |_,code| code }
+    end
 
-        [distance([lat, long], coord), code]
-      end
-
-      airport_distance_list.min_by { |dist, code| dist }[1]
+    def furthest(coord)
+      airport_distance_list(coord).sort_by { |dist,_| -dist }.map { |_,code| code }
     end
 
     private
+      def airport_distance_list(coord)
+        all.pluck(:latitude, :longitude, :code).map! do |lat, long, code|
+          lat = lat.to_f
+          long = long.to_f
+
+          [distance([lat, long], coord), code]
+        end
+      end
+
       # Copied from stack overflow
       def distance(loc1, loc2)
         rad_per_deg = Math::PI/180  # PI / 180

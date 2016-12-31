@@ -16,8 +16,7 @@ const mapDispatchToProps = dispatch => {
   }, dispatch)
 }
 
-// This should be refactored so that facebook sign in logic and
-// modal are in their own file
+// This should be refactored so that facebook sign in is in its own file
 class FlightSearch extends React.Component {
   constructor(props) {
     super(props)
@@ -141,7 +140,7 @@ class FlightSearch extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // if the modal is open when the auth request finishes,
-    // close the modal and send the 
+    // close the modal and submit the form
     if (!this.props.signedIn && nextProps.signedIn && this.state.showModal) {
       this.setState({showModal: false})
       this.handleSubmitWhenSignedIn()
@@ -149,7 +148,7 @@ class FlightSearch extends React.Component {
   }
 
   render() {
-    const { fetchingLocation, coords } = this.props
+    const { fetchingLocation } = this.props
 
     return (
       <div>

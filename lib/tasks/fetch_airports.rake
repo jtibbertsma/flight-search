@@ -1,7 +1,10 @@
 require 'set'
 
 task fetch_airports: :environment do
-  major_airports = Set.new(Typhoeus.get('http://www.nationsonline.org/oneworld/major_US_airports.htm').body.scan(/\b[A-Z]{3}\b/))
+  major_airports = Set.new(
+    Typhoeus.get('http://www.nationsonline.org/oneworld/major_US_airports.htm')
+      .body.scan(/\b[A-Z]{3}\b/)
+  )
 
   File.open(Rails.root.join('airports.dat')) do |file|
     file.each_line do |line|

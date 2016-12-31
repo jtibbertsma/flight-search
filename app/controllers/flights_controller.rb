@@ -1,45 +1,57 @@
 class FlightsController < ApplicationController
   before_action :set_origin
   before_action :set_date
-  before_action :get_destinations
+  before_action :set_destinations
 
   def search
-    request_list.each { |req| hydra.queue(req) }
-    # sends request concurrently, but waits for all requests to be completed
-    hydra.run
-
     trips = []
     request_list.each do |req|
-      if req.response.code != 200
-        render json: req.response.body, status: 422
-        return
+      hydra.queue(req)
+      req.on_complete do |res|
+        if res.success?
+          trips += trip_list(res)
+        else
+          hydra.abort
+          render json: res.body, status: 400
+          return
+        end
       end
-
-      trips += trip_list(req) || []
     end
+
+    hydra.run
 
     trips.sort_by! { |trip| trip['saleTotal'][/\d+/].to_i }
     render json: { flights: trips.first(100) }
   end
 
   private
+    ## API defaults
+    # Default origin is nearest airport
+    # Default possible destinations are the 8 furthest airports
+    # Default date is a week from now
+
     def set_origin
       @data = params[:data]
 
-      if !@data[:origin]
-        @data[:origin] = Airport.nearest_airport(params[:coords])
+      if !@data[:origin].present?
+        @data[:origin] = Airport.nearest(params[:coords]).first
       end
     end
 
     def set_date
-      if !@data[:date]
-        # Get date of tomorrow as a string
-        @data[:date] = (Time.now + 1.day).to_s[/\d+-\d+-\d+/]
+      if !@data[:date].present?
+        @data[:date] = (Time.now + 1.week).to_s[/\d+-\d+-\d+/]
       end
     end
 
-    def get_destinations
-      @destinations = ['LAX', 'BOS']
+    def set_destinations
+      if !@data[:destinations].present?
+        nearest = Airport.find_by_code(@data[:origin])
+        coord = [nearest.latitude.to_f, nearest.longitude.to_f]
+        @destinations = Airport.furthest(coord).first(8)
+      else
+        @destinations = @data[:destinations].delete
+      end
     end
 
     def request_list
@@ -50,10 +62,10 @@ class FlightsController < ApplicationController
     end
 
     def hydra
-      @hydra ||= Typhoeus::Hydra.new(max_concurrency: 12)
+      @hydra ||= Typhoeus::Hydra.new(max_concurrency: 8)
     end
 
-    def trip_list(request)
-      MultiJson.load(request.response.body)['trips']['tripOption']
+    def trip_list(response)
+      MultiJson.load(response.body)['trips']['tripOption'] || []
     end
 end
