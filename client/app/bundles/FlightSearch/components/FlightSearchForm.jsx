@@ -74,6 +74,11 @@ const SelectDate = ({ input, meta }) => {
         onDayClick={handleDayClick}
         onBlur={onBlur}
       />
+      {
+    input.value ? (
+      <p className="help-block">{`Selected ${input.value}`}</p>
+    ) : ''
+      }
     </div>
   )
 }
