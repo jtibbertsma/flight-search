@@ -6,7 +6,7 @@ import {
 
 
 export default function geolocationReducer(
-  state = { needToFetch: false, position: {} },
+  state = { position: {} },
   action
 ) {
   switch(action.type) {
@@ -19,14 +19,12 @@ export default function geolocationReducer(
     case SET_POSITION:
       return {
         fetching: false,
-        needToFetch: false,
         position: action.position
       }
 
     case FAILED_TO_SET_POSITION:
       return {
         fetching: false,
-        needToFetch: true,
         position: {}
       }
 

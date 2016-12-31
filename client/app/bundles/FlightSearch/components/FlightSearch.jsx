@@ -51,8 +51,6 @@ class FlightSearch extends React.Component {
   handleSubmitWhenSignedIn() {
     const { setFlights, coords } = this.props
 
-    console.log(coords)
-
     search(this.formData, coords,
       // onSuccess
       response => {

@@ -4,10 +4,17 @@ class GoogleFlights
 
   class << self
     def search(data)
-      # body = { request: data }
+      body = {
+        request: {
+          passengers: { adultCount: 1 },
+          slice: [
+            data
+          ]
+        }
+      }
       return Typhoeus::Request.new(URI,
         method: 'POST',
-        body: '{"request":{"passengers":{"adultCount":1},"slice":[{"origin":"HWD","destination":"LAX","date":"2017-01-05"}]}}',
+        body: body.to_json,
         headers: {'Content-Type'=>'application/json'}
       )
     end

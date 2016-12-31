@@ -11,7 +11,7 @@ const mapStateToProps = ({ geolocation, currentUser }) => {
   let coords = null
 
   if (coordOb) {
-    coords = {latitude: coordOb.latitude, longitude: coordOb.longitude}
+    coords = [coordOb.latitude, coordOb.longitude]
   }
 
   return {
