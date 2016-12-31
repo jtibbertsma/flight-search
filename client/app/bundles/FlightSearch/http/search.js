@@ -1,8 +1,8 @@
 import request from 'axios'
 
-export default function search(data, onSuccess, onError) {
+export default function search(data, coords, onSuccess, onError) {
   request
-    .post('/api/search', { data })
+    .post('/api/search', { data, coords })
     .then(onSuccess)
     .catch(onError)
 }

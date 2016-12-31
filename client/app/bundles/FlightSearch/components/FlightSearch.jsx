@@ -49,9 +49,11 @@ class FlightSearch extends React.Component {
   }
 
   handleSubmitWhenSignedIn() {
-    const { setFlights } = this.props
+    const { setFlights, coords } = this.props
 
-    search(this.formData,
+    console.log(coords)
+
+    search(this.formData, coords,
       // onSuccess
       response => {
         setFlights(response.data.flights)
@@ -66,21 +68,21 @@ class FlightSearch extends React.Component {
     )
   }
 
-  handlePromise(index) {
+  handlePromise(index, args) {
     const func = this.promise[index]
 
     this.formData = null
     this.promise = null
 
-    func()
+    func(...args)
   }
 
-  resolvePromise() {
-    this.handlePromise(0)
+  resolvePromise(...args) {
+    this.handlePromise(0, args)
   }
 
-  rejectPromise() {
-    this.handlePromise(1)
+  rejectPromise(...args) {
+    this.handlePromise(1, args)
   }
 
   cancelSignIn() {
@@ -157,7 +159,6 @@ class FlightSearch extends React.Component {
         <FlightSearchForm
           onSubmit={this.handleSubmit}
           fetchingLocation={fetchingLocation}
-          coords={coords}
         />
       </div>
     )
