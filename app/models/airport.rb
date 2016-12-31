@@ -3,10 +3,10 @@
 # Table name: airports
 #
 #  id         :integer          not null, primary key
-#  name       :string
-#  code       :string
-#  latitude   :decimal(, )
-#  longitude  :decimal(, )
+#  name       :string           not null
+#  code       :string           not null
+#  latitude   :decimal(, )      not null
+#  longitude  :decimal(, )      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -16,6 +16,9 @@
 #
 
 class Airport < ApplicationRecord
+  validates :code, uniqueness: true
+  validates :code, :name, :latitude, :longitude, presence: true
+
   class << self
     def nearest(coord)
       airport_distance_list(coord).sort_by { |dist,_|  dist }.map { |_,code| code }

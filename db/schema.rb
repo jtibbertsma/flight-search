@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161231045549) do
+ActiveRecord::Schema.define(version: 20161231184322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "airports", force: :cascade do |t|
-    t.string   "name"
-    t.string   "code"
-    t.decimal  "latitude"
-    t.decimal  "longitude"
+    t.string   "name",       null: false
+    t.string   "code",       null: false
+    t.decimal  "latitude",   null: false
+    t.decimal  "longitude",  null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_airports_on_code", unique: true, using: :btree
