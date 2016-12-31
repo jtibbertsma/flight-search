@@ -9,7 +9,7 @@ class FlightsController < ApplicationController
     end
 
     trips = trip_list(flight_request)
-    render json: { flights: trips }
+    render json: { flights: trips || [] }
   end
 
   private

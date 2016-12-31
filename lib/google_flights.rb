@@ -7,7 +7,7 @@ class GoogleFlights
       # body = { request: data }
       return Typhoeus::Request.new(URI,
         method: 'POST',
-        body: '{"request":{"passengers":{"adultCount":1},"slice":[{"origin":"SFO","destination":"LAX","date":"2017-01-05"}]}}',
+        body: '{"request":{"passengers":{"adultCount":1},"slice":[{"origin":"HWD","destination":"LAX","date":"2017-01-05"}]}}',
         headers: {'Content-Type'=>'application/json'}
       )
     end
