@@ -1,4 +1,6 @@
 class FlightsController < ApplicationController
+  before_action :enforce_facebook_login
+
   before_action :set_origin
   before_action :set_date
   before_action :set_destinations
@@ -25,6 +27,14 @@ class FlightsController < ApplicationController
   end
 
   private
+    def enforce_facebook_login
+      res = Typhoeus.get("https://graph.facebook.com/v2.8/me?access_token=#{params[:token]}")
+
+      unless res.success?
+        render json: { error: "Invalid facebook token" }, status: 403
+      end
+    end
+
     ## API defaults
     # Default origin is nearest airport
     # Default possible destinations are the 8 furthest airports
