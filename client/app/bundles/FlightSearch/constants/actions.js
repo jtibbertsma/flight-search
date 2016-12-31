@@ -4,3 +4,5 @@ export const SET_POSITION = "SET_POSITION"
 export const FAILED_TO_SET_POSITION = "FAILED_TO_SET_POSITION"
 
 export const SET_USER = "SET_USER"
+
+export const SET_FLIGHTS = "SET_FLIGHTS"

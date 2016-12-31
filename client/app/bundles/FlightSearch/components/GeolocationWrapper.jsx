@@ -7,10 +7,17 @@ import { fetchingPosition, setPosition, failedToSetPosition } from '../actions/g
 
 
 const mapStateToProps = ({ geolocation, currentUser }) => {
+  const coordOb = geolocation.position && geolocation.position.coords
+  let coords = null
+
+  if (coordOb) {
+    coords = {latitude: coordOb.latitude, longitude: coordOb.longitude}
+  }
+
   return {
     fetching: geolocation.fetching,
     signedIn: currentUser !== null,
-    coords: geolocation.position && geolocation.position.coords
+    coords: coords
   }
 }
 

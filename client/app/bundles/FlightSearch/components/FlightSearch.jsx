@@ -5,12 +5,14 @@ import Modal from 'react-bootstrap/lib/Modal'
 
 import FlightSearchForm from './FlightSearchForm'
 import { setUser } from '../actions/currentUser'
+import { setFlights } from '../actions/flights'
 import search from '../http/search'
 
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-    setUser
+    setUser,
+    setFlights
   }, dispatch)
 }
 
@@ -47,10 +49,12 @@ class FlightSearch extends React.Component {
   }
 
   handleSubmitWhenSignedIn() {
+    const { setFlights } = this.props
+
     search(this.formData,
       // onSuccess
       response => {
-        console.log(JSON.parse(response.data.flights))
+        setFlights(response.data.flights)
         this.resolvePromise()
       },
 

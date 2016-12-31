@@ -3,9 +3,8 @@ class FlightsController < ApplicationController
     hydra.queue(flight_request)
     hydra.run
 
-    Rails.logger.info flight_request.response.body
-
-    render json: { flights: flight_request.response.body }
+    trips = trip_list(flight_request)
+    render json: { flights: trips }
   end
 
   private
@@ -15,5 +14,9 @@ class FlightsController < ApplicationController
 
     def flight_request
       @request ||= GoogleFlights.search(params[:data])
+    end
+
+    def trip_list(request)
+      MultiJson.load(request.response.body)['trips']['tripOption']
     end
 end

@@ -2,6 +2,7 @@ import React from 'react'
 
 import GeolocationWrapper from '../components/GeolocationWrapper'
 import CheckLoginStatus from '../components/CheckLoginStatus'
+import DisplayFlights from '../components/DisplayFlights'
 
 
 const FlightSearchPage = () => (
@@ -12,10 +13,13 @@ const FlightSearchPage = () => (
       </div>
     </div>
     <div className="row">
-      <div className="col-sm-6">
+      <div className="col-sm-4">
         <CheckLoginStatus>
           <GeolocationWrapper />
         </CheckLoginStatus>
+      </div>
+      <div className="col-sm-8">
+        <DisplayFlights />
       </div>
     </div>
   </div>
