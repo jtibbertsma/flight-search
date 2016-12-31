@@ -1,5 +1,5 @@
 import React from 'react'
-import { reduxForm, Field } from 'redux-form'
+import { reduxForm, Field, Form } from 'redux-form'
 import Select from 'react-select'
 import classNames from 'classnames'
 import DayPicker from 'react-day-picker'
@@ -84,6 +84,13 @@ const SelectDate = ({ input, meta }) => {
 }
 
 class FlightSearchForm extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.coords && nextProps.coords) {
+      // HACK: revalidate when receiving coordinates
+      this.originField.refs.connected.refs.wrappedInstance.handleChange(null)
+    }
+  }
+
   render() {
     const {
       submitting,
@@ -97,6 +104,7 @@ class FlightSearchForm extends React.Component {
     return (
       <form onSubmit={handleSubmit}>
         <Field
+          ref={c => { this.originField = c }}
           name="origin"
           component={SelectOrigin}
           airports={airports}
