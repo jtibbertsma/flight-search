@@ -75,7 +75,7 @@ const DisplayFlights = ({
 
             return (
               <Cell>
-                {format(departureTime, "MMMM Mo, YYYY, h:mma")}
+                {format(departureTime, "MMMM Do, YYYY, h:mma")}
               </Cell>
             )
           }}

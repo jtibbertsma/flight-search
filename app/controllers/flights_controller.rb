@@ -3,6 +3,11 @@ class FlightsController < ApplicationController
     hydra.queue(flight_request)
     hydra.run
 
+    if (flight_request.response.code != 200)
+      render json: flight_request.response.body, status: 422
+      return
+    end
+
     trips = trip_list(flight_request)
     render json: { flights: trips }
   end
