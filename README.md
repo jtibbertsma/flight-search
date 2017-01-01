@@ -13,4 +13,4 @@ To run in development:
 
 - [x] Facebook sign in
 - [x] Basic flight search w/ google flights api
-- [] Detailed search form
+- [ ] Detailed search form
