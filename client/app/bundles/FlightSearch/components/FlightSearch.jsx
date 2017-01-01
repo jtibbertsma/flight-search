@@ -6,13 +6,15 @@ import Modal from 'react-bootstrap/lib/Modal'
 import FlightSearchForm from './FlightSearchForm'
 import { setUser } from '../actions/currentUser'
 import { setFlights } from '../actions/flights'
+import { setFlash } from '../actions/flash'
 import search from '../http/search'
 
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     setUser,
-    setFlights
+    setFlights,
+    setFlash
   }, dispatch)
 }
 
@@ -48,7 +50,7 @@ class FlightSearch extends React.Component {
   }
 
   handleSubmitWhenSignedIn() {
-    const { setFlights, coords } = this.props
+    const { setFlash, setFlights, coords } = this.props
 
     search(this.formData, coords,
       // onSuccess
@@ -59,7 +61,30 @@ class FlightSearch extends React.Component {
 
       // onError
       err => {
-        console.error(err)
+        if (err.response) {
+          const status = err.response.status
+
+          if (status === 403) {
+            setFlash(
+              'flightSearch',
+              'Failed to authenticate with facebook.'
+            )
+          } else if (status === 400) {
+            const errorMessage = err.response.data.error.errors[0].message
+            setFlash(
+              'flightSearch',
+              `Google Flights API error with message '${errorMessage}'`
+            )
+          } else {
+            setFlash(
+              'flightSearch',
+              `Unexpected server error: status code '${status}'`
+            )
+          }
+        } else {
+          setFlash('flightSearch', 'No response received. Is the internet disconnected?')
+        }
+
         this.rejectPromise()
       }
     )

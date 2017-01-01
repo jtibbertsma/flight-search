@@ -49,3 +49,30 @@ body {
 .more-margin {
   margin-bottom: 30px;
 }
+
+.flash-leave {
+  opacity: 1;
+}
+
+.flash-leave-active {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
+.flash-button {
+  background: none;
+  color: #a94442;
+  font-size: 17px;
+  outline: none;
+  border: none;
+  position: absolute;
+  right: 15px;
+  opacity: 0.6;
+  &:hover {
+    opacity: 1.0;
+  }
+  &:focus {
+    outline: none;
+    opacity: 0.0;
+  }
+}

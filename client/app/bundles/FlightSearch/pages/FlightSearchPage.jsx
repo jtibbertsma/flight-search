@@ -3,6 +3,7 @@ import React from 'react'
 import GeolocationWrapper from '../components/GeolocationWrapper'
 import CheckLoginStatus from '../components/CheckLoginStatus'
 import DisplayFlights from '../components/DisplayFlights'
+import Flash from '../components/Flash'
 
 
 const FlightSearchPage = () => (
@@ -14,6 +15,7 @@ const FlightSearchPage = () => (
     </div>
     <div className="row">
       <div className="col-sm-4">
+        <Flash flashKey="flightSearch" />
         <CheckLoginStatus>
           <GeolocationWrapper />
         </CheckLoginStatus>

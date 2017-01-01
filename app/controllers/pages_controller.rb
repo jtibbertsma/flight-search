@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   before_action :fetch_airports
 
   def root
-    redux_store('applicationStore', props: {})
+    redux_store('applicationStore', props: possible_flash_error)
   end
 
   private
@@ -14,5 +14,19 @@ class PagesController < ApplicationController
       end
 
       @airports.sort_by! { |item| item[:label] }
+    end
+
+    def possible_flash_error
+      if @airports.length === 0
+        { 
+          flash: {
+            flightSearch: {
+              message: "No airport data. Please run 'rake fetch_airports' and reload the page"
+            }
+          }
+        }
+      else
+        {}
+      end
     end
 end

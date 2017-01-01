@@ -6,3 +6,6 @@ export const FAILED_TO_SET_POSITION = "FAILED_TO_SET_POSITION"
 export const SET_USER = "SET_USER"
 
 export const SET_FLIGHTS = "SET_FLIGHTS"
+
+export const CLEAR_FLASH = "CLEAR_FLASH"
+export const SET_FLASH = "SET_FLASH"
