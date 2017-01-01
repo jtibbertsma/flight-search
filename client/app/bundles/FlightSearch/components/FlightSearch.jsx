@@ -118,8 +118,6 @@ class FlightSearch extends React.Component {
     FB.login(response => {
       if (response.authResponse) {
         setUser(response.authResponse)
-        this.setState({showModal: false})
-        this.handleSubmitWhenSignedIn()
       } else {
         this.cancelSignIn()
       }

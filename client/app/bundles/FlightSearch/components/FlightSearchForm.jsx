@@ -133,7 +133,9 @@ class FlightSearchForm extends React.Component {
           name="date"
           component={SelectDate}
           normalize={value => {
-            return format(value, "YYYY-MM-DD")
+            if (value) {
+              return format(value, "YYYY-MM-DD")
+            }
           }}
           validate={value => {
             if (value) {
