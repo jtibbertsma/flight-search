@@ -9,11 +9,10 @@ class PagesController < ApplicationController
 
   private
     def fetch_airports
-      @airports = Airport.all.pluck(:name, :code).map do |name, code|
-        { value: code, label: name }
+      @airports = {}
+      Airport.all.pluck(:name, :code).each do |name, code|
+        @airports[code] = name
       end
-
-      @airports.sort_by! { |item| item[:label] }
     end
 
     def possible_flash_error

@@ -8,13 +8,15 @@ import format from 'date-fns/format'
 import Label from './Label'
 
 
+let airportOptions = null
+
 const formGroupClassName = error => {
   return classNames('form-group', {
     'has-error': error
   })
 }
 
-const SelectOrigin = ({ input, meta, airports }) => {
+const SelectOrigin = ({ input, meta }) => {
   const onChange = item => {
     input.onChange(item && item.value)
   }
@@ -25,7 +27,7 @@ const SelectOrigin = ({ input, meta, airports }) => {
     <div className={formGroupClassName(meta.touched && meta.error)}>
       <Label label="Origin" touched={meta.touched} error={meta.error} />
       <Select
-        options={airports}
+        options={airportOptions}
         instanceId="origin"
         placeholder="Select Origin..."
         {...input}
@@ -36,7 +38,7 @@ const SelectOrigin = ({ input, meta, airports }) => {
   )
 }
 
-const SelectDestinations = ({ input, meta, airports }) => {
+const SelectDestinations = ({ input, meta }) => {
   const onChange = array => {
     input.onChange(array.map(item => item && item.value))
   }
@@ -48,7 +50,7 @@ const SelectDestinations = ({ input, meta, airports }) => {
       <Label label="Possible Destinations" touched={meta.touched} error={meta.error} />
       <Select
         multi={true}
-        options={airports}
+        options={airportOptions}
         instanceId="destinations"
         placeholder="Select Destinations..."
         {...input}
@@ -84,6 +86,27 @@ const SelectDate = ({ input, meta }) => {
 }
 
 class FlightSearchForm extends React.Component {
+  componentWillMount() {
+    if (!airportOptions) {
+      const { airports } = this.context
+      airportOptions = Object.keys(airports).map(key => {
+        return {
+          label: airports[key],
+          value: key
+        }
+      })
+      airportOptions.sort((a, b) => {
+        if (a['label'] < b['label']) {
+          return -1
+        } else if (a['label'] === b['label']) {
+          return 0
+        } else {
+          return 1
+        }
+      })
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!this.props.coords && nextProps.coords) {
       // HACK: revalidate when receiving coordinates
@@ -99,15 +122,12 @@ class FlightSearchForm extends React.Component {
       coords
     } = this.props
 
-    const { airports } = this.context
-
     return (
       <form onSubmit={handleSubmit}>
         <Field
           ref={c => { this.originField = c }}
           name="origin"
           component={SelectOrigin}
-          airports={airports}
           validate={value => {
             if (!value && !coords) {
               return "Unable to fetch location; you must provide an origin"
@@ -117,7 +137,6 @@ class FlightSearchForm extends React.Component {
         <Field
           name="destinations"
           component={SelectDestinations}
-          airports={airports}
           validate={(value, allValues) => {
             const origin = allValues.origin
             if (origin && value) {
@@ -161,7 +180,7 @@ class FlightSearchForm extends React.Component {
 }
 
 FlightSearchForm.contextTypes = {
-  airports: React.PropTypes.array
+  airports: React.PropTypes.object
 }
 
 export default reduxForm({

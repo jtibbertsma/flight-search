@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 const DisplayFlights = ({
   didFirstFetch,
   flightList
-}) => {
+}, { airports }) => {
   if (!didFirstFetch) {
     return null
   }
@@ -47,11 +47,14 @@ const DisplayFlights = ({
         <Column
           width={100}
           header={<Cell>Origin</Cell>}
-          cell={({rowIndex}) => (
-            <Cell>
-              {flightList[rowIndex].slice[0].segment[0].leg[0].origin}
-            </Cell>
-          )}
+          cell={({rowIndex}) => {
+            const origin = flightList[rowIndex].slice[0].segment[0].leg[0].origin
+            return (
+              <Cell title={airports[origin]}>
+                {origin}
+              </Cell>
+            )
+          }}
         />
         <Column
           width={100}
@@ -59,10 +62,11 @@ const DisplayFlights = ({
           cell={({rowIndex}) => {
             const segment = flightList[rowIndex].slice[0].segment
             const leg = segment[segment.length-1].leg
+            const destination = leg[leg.length-1].destination
 
             return (
-              <Cell>
-                {leg[leg.length-1].destination}
+              <Cell title={airports[destination]}>
+                {destination}
               </Cell>
             )
           }}
@@ -101,6 +105,10 @@ const DisplayFlights = ({
       }
     </div>
   )
+}
+
+DisplayFlights.contextTypes = {
+  airports: React.PropTypes.object
 }
 
 export default connect(mapStateToProps)(DisplayFlights)

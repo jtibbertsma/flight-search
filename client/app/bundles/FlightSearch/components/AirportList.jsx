@@ -13,7 +13,7 @@ class AirportList extends React.Component {
 }
 
 AirportList.childContextTypes = {
-  airports: React.PropTypes.array
+  airports: React.PropTypes.object
 }
 
 export default AirportList
