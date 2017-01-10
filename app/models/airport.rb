@@ -21,11 +21,15 @@ class Airport < ApplicationRecord
 
   class << self
     def nearest(coord)
-      airport_distance_list(coord).sort_by { |dist,_|  dist }.map { |_,code| code }
+      sorted_distance_list(coord) { |d| d }
     end
 
     def furthest(coord)
-      airport_distance_list(coord).sort_by { |dist,_| -dist }.map { |_,code| code }
+      sorted_distance_list(coord) { |d| -d }
+    end
+
+    def sorted_distance_list(coord)
+      airport_distance_list(coord).sort_by { |dist,_| yield dist }.map { |_,code| code }
     end
 
     private
