@@ -40,7 +40,7 @@ class FlightSearch extends React.Component {
       if (signedIn) {
         this.handleSubmitWhenSignedIn()
       } else {
-        this.setState({showModal: true})
+        this.openSignInModal()
       }
     })
   }
@@ -86,21 +86,25 @@ class FlightSearch extends React.Component {
     )
   }
 
-  handlePromise(index, args) {
+  openSignInModal() {
+    this.setState({showModal: true})
+  }
+
+  resolvePromise(...args) {
+    this.finishPromise(0, args)
+  }
+
+  rejectPromise(...args) {
+    this.finishPromise(1, args)
+  }
+
+  finishPromise(index, args) {
     const func = this.promise[index]
 
     this.formData = null
     this.promise = null
 
     func(...args)
-  }
-
-  resolvePromise(...args) {
-    this.handlePromise(0, args)
-  }
-
-  rejectPromise(...args) {
-    this.handlePromise(1, args)
   }
 
   cancelSignIn() {
