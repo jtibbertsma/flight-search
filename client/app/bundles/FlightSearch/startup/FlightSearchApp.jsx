@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 
 import FlightSearchPage from '../pages/FlightSearchPage'
 import AirportList from '../components/AirportList'
+import Geolocation from '../components/Geolocation'
+import CheckLoginStatus from '../components/CheckLoginStatus'
 
 
 function FlightSearchApp(props, railsContext) {
@@ -12,7 +14,11 @@ function FlightSearchApp(props, railsContext) {
   return (
     <AirportList airports={props.airports}>
       <Provider store={store}>
-        <FlightSearchPage />
+        <CheckLoginStatus>
+          <Geolocation>
+            <FlightSearchPage />
+          </Geolocation>
+        </CheckLoginStatus>
       </Provider>
     </AirportList>
   )

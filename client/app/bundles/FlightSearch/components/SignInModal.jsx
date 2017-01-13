@@ -26,6 +26,7 @@ class SignInModal extends React.Component {
       if (response.authResponse) {
         setUser(response.authResponse)
       } else {
+        console.log(response)
         onCancel()
       }
     })

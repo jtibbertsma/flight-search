@@ -9,6 +9,21 @@ import { setFlash } from '../actions/flash'
 import search from '../http/search'
 
 
+const mapStateToProps = ({ geolocation, currentUser }) => {
+  const coordOb = geolocation.position && geolocation.position.coords
+  let coords = null
+
+  if (coordOb) {
+    coords = [coordOb.latitude, coordOb.longitude]
+  }
+
+  return {
+    fetchingLocation: geolocation.fetching,
+    signedIn: currentUser !== null,
+    coords: coords
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     setFlights,
@@ -127,6 +142,11 @@ class FlightSearch extends React.Component {
 
     return (
       <div>
+        {
+      fetchingLocation ? (
+        <p>Fetching Location...</p>
+      ) : ''
+        }
         <SignInModal
           show={showModal}
           onCancel={this.cancelSignIn}
@@ -141,4 +161,4 @@ class FlightSearch extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(FlightSearch)
+export default connect(mapStateToProps, mapDispatchToProps)(FlightSearch)

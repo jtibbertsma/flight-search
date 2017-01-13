@@ -31,9 +31,7 @@ class CheckLoginStatus extends React.Component {
   }
 
   render() {
-    const { children } = this.props
-
-    return React.Children.only(children)
+    return React.Children.only(this.props.children)
   }
 }
 
