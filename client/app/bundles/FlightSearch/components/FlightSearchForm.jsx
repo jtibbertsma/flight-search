@@ -1,5 +1,5 @@
 import React from 'react'
-import { reduxForm, Field, Form } from 'redux-form'
+import { reduxForm, Field } from 'redux-form'
 import Select from 'react-select'
 import classNames from 'classnames'
 import DayPicker from 'react-day-picker'
@@ -40,7 +40,7 @@ const SelectOrigin = ({ input, meta }) => {
 
 const SelectDestinations = ({ input, meta }) => {
   const onChange = array => {
-    input.onChange(array.map(item => item && item.value))
+    input.onChange(array.map(item => item.value))
   }
   const onBlur = () => {
     input.onBlur(input.value)
